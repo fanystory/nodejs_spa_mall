@@ -10,7 +10,6 @@ const connect = require('./schemas/');
 connect();
 
 const goodsRouter = require('./routes/goods');
-const cartsRouter = require('./routes/carts');
 
 //------------------------------------------------------------
 //  🧑🏻‍💻 미들웨어
@@ -24,11 +23,12 @@ const requestMiddleware = (req, res, next) => {
     //next대신 이걸 쓰면 인터셉트 할 수 있음
 };
 
+app.use(express.static('static'));
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(requestMiddleware);
 
-app.use('/api', [goodsRouter, cartsRouter]);
+app.use('/api', [goodsRouter]);
 
 //------------------------------------------------------------
 //  🧑🏻‍💻 라우터
@@ -44,4 +44,4 @@ app.get('/', (req, res) => {
 
 app.listen(port, ()=>{
     console.log(`🟢SERVER: ${port}로 서버 실행`);
-})
+});
